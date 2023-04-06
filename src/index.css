@@ -11,6 +11,13 @@ code {
     monospace;
 }
 
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
 body {
   background-color: #393e46;
 }
