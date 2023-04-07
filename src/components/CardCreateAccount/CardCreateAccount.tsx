@@ -27,17 +27,24 @@ const CREATE_ROLE = gql`
   }
 `;
 const CREATE_ACCOUNT = gql`
-  mutation Create {
+  mutation Create(
+    $email: String!
+    $name: String!
+    $second_name: String!
+    $password: String!
+    $payment: String!
+    $birth: String!
+  ) {
     create(
       data: {
-        email: "alberto@email.com"
-        name: "Alberto paiva"
-        second_name: "Belo"
-        password: "1234567"
+        email: $email
+        name: $name
+        second_name: $second_name
+        password: $password
         vip: true
-        payment: "200"
+        payment: $payment
         role: 1
-        birth: "22/10/2023"
+        birth: $birth
       }
     ) {
       id
@@ -60,19 +67,27 @@ export default function CardCreateAccount() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors, isDirty },
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log(data);
+    
     createUser();
   };
 
   const [createUser] = useMutation(CREATE_ACCOUNT, {
+    variables: {
+      email: getValues("email"),
+      name: getValues("name"),
+      password: getValues("password"),
+      payment: getValues("payment"),
+      birth: getValues("birth"),
+      second_name: getValues("secondName"),
+    },
     onError: console.log,
   });
-
-  const { data } = useQuery(FIND_ROLES);
-  console.log(data);
 
   return (
     <div className="card">
@@ -115,7 +130,7 @@ export default function CardCreateAccount() {
         <label htmlFor="name">Birth date</label>
         <input
           type="text"
-          {...register("payment", {
+          {...register("birth", {
             required: true,
           })}
         />
