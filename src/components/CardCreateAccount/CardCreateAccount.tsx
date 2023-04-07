@@ -72,12 +72,10 @@ export default function CardCreateAccount() {
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
-    
     createUser();
   };
 
-  const [createUser] = useMutation(CREATE_ACCOUNT, {
+  const [createUser, { data, loading, error }] = useMutation(CREATE_ACCOUNT, {
     variables: {
       email: getValues("email"),
       name: getValues("name"),
@@ -169,7 +167,9 @@ export default function CardCreateAccount() {
             <span role="alert">Invalid password</span>
           ))}
 
-        <button type="submit">Create account</button>
+        <button type="submit">
+          {(!loading && "Create account") || (loading && "Carregando...")}
+        </button>
         <span></span>
       </form>
       <div className="card-footer">
