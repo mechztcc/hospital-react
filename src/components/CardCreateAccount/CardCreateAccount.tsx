@@ -68,6 +68,7 @@ export default function CardCreateAccount() {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors, isDirty },
   } = useForm<IFormInput>();
 
@@ -86,6 +87,10 @@ export default function CardCreateAccount() {
     },
     onError: console.log,
   });
+
+  if(data) {
+    reset()
+  }
 
   return (
     <div className="card">
