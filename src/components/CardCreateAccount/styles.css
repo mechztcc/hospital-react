@@ -1,0 +1,98 @@
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #eeeeee;
+    width: 40%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-radius: 10px;
+    box-shadow: 10px 10px 21px -8px rgba(0,0,0,0.75);
+  }
+
+  @media (max-width: 725px) {
+    .card {
+      width: 60%;
+    }
+  }
+
+  @media (min-width: 1500px) {
+    .card {
+      width: 30%;
+    }
+  }
+  
+  h1 {
+    width: 80%;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    width: 80%;
+  }
+  
+  form > span {
+      color: gray;
+      margin-top: 5%;
+      cursor: pointer;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    margin-top: 5%;
+    color: gray;
+  }
+  
+  input {
+    border-radius: 10px;
+    border: none;
+    height: 40px;
+    font-size: 16px;
+    padding-left: 5px;
+    
+  }
+  input:focus-visible {
+    outline: 1px solid #00adb5;
+  }
+  
+  button {
+    width: 100%;
+    background: linear-gradient(to right, #00adb5, #14d3dd);
+    border-radius: 10px;
+    padding: 0.5rem;
+    height: 40px;
+    margin-top: 5%;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .card > span {
+    color: #00adb5;
+    margin-top: 5%;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin-top: 5%;
+  }
+  
+  .card-footer > small {
+    color: gray;
+    font-weight: bold;
+  }
+  
+  .card-footer > span {
+      color: #00adb5;
+      margin-left: 3%;
+      cursor: pointer;
+  
+  }
+  

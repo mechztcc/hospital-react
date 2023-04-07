@@ -11,6 +11,19 @@
   box-shadow: 10px 10px 21px -8px rgba(0,0,0,0.75);
 }
 
+@media (max-width: 725px) {
+  .card {
+    width: 60%;
+  }
+}
+
+@media (min-width: 1500px) {
+  .card {
+    width: 30%;
+  }
+}
+
+
 h1 {
   width: 80%;
 }

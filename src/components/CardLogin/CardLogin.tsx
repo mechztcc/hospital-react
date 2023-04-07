@@ -1,6 +1,7 @@
 import "./styles.css";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 interface IFormInput {
   email: String;
@@ -18,13 +19,12 @@ export default function CardLogin() {
 
   return (
     <div className="card">
-      <h1>Lets login into yout account</h1>
+      <h1>Lets login into your account</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">E-mail</label>
         <input
           type="email"
           {...register("email", {
-            onChange: () => console.log(errors),
             required: true,
             pattern: {
               value: /\S+@\S+\.\S+/,
@@ -53,7 +53,7 @@ export default function CardLogin() {
       </form>
       <div className="card-footer">
         <small>Dont have account?</small>
-        <span>Register now!</span>
+        <Link to="/create-account">Register now!</Link>
       </div>
     </div>
   );
