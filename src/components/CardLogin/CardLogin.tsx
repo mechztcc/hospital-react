@@ -12,7 +12,7 @@ export default function CardLogin() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
@@ -32,21 +32,18 @@ export default function CardLogin() {
             },
           })}
         />
-        <p>{errors.email?.message}</p>
+        {errors.email?.message && <span role="alert">Invalid e-mail</span>}
 
         <label htmlFor="password">Password</label>
         <input
           type="password"
           {...register("password", {
-            minLength: 8,
-            maxLength: 10,
             required: true,
           })}
         />
-        <p>
-          {(errors.password?.type === "minLength" && "Password is short") ||
-            (errors.password?.type === "maxLength" && "Password is too big")}
-        </p>
+    
+          {(errors.password && isDirty) && <span role="alert">Password is required</span>}
+        
 
         <button type="submit">Login</button>
         <span>Forgot password?</span>
