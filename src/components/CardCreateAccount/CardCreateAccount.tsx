@@ -5,6 +5,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 
 import "./styles.css";
 import { useState, useEffect } from "react";
+import { log } from "console";
 
 interface IFormInput {
   name: string;
@@ -17,24 +18,27 @@ interface IFormInput {
   birth: string;
 }
 
+const CREATE_ROLE = gql`
+  mutation CreateRole {
+    createRole(name: "Medic2") {
+      id
+      name
+    }
+  }
+`;
 const CREATE_ACCOUNT = gql`
-  mutation Create(
-    $email: String!
-    $password: String!
-    $name: String!
-    $second_name: String!
-    $payment: String!
-    $birth: String!
-    $role: Int!
-  ) {
+  mutation Create {
     create(
-      email: $email
-      password: $password
-      name: $name
-      second_name: $second_name
-      payment: $payment
-      birth: $birth
-      role: $role
+      data: {
+        email: "alberto@email.com"
+        name: "Alberto paiva"
+        second_name: "Belo"
+        password: "1234567"
+        vip: true
+        payment: "200"
+        role: 1
+        birth: "22/10/2023"
+      }
     ) {
       id
       name
@@ -59,23 +63,16 @@ export default function CardCreateAccount() {
     formState: { errors, isDirty },
   } = useForm<IFormInput>();
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    await createUser();
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    createUser();
   };
 
   const [createUser] = useMutation(CREATE_ACCOUNT, {
-    variables: {
-      email: "email2@email.com",
-      password: "1234567",
-      name: "name",
-      second_name: "name",
-      payment: "200",
-      birth: "22/10/2023",
-      role: 1,
-      vip: true,
-    },
     onError: console.log,
   });
+
+  const { data } = useQuery(FIND_ROLES);
+  console.log(data);
 
   return (
     <div className="card">
