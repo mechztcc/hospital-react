@@ -1,0 +1,63 @@
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 80%;
+}
+
+.search {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    background-color: #EEEEEE;
+    border-radius: 5px;
+}
+
+input {
+    width: 80%;
+}
+
+table {
+  width: 80%;
+  border-spacing: 0;
+  margin-top: 1%;
+}
+
+tr {
+  background-color: #eeeeee;
+  padding: 5%;
+}
+
+th {
+    font-size: 20px;
+}
+
+td {
+  text-align: center;
+  padding: 1%;
+}
+
+.badge-active {
+  background-color: #00adb5;
+  color: white;
+  width: 100%;
+  padding: 0 3%;
+  border-radius: 5px;
+}
+
+.primary {
+  color: #00adb5;
+}
+
+.icons {
+    margin-right: 5%;
+}
