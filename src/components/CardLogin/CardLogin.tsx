@@ -1,3 +1,4 @@
+import { useMutation, gql } from "@apollo/client";
 import "./styles.css";
 
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -8,14 +9,31 @@ interface IFormInput {
   password: String;
 }
 
+const AUTH = gql`
+  mutation Auth($email: String!, $password: String!) {
+    auth(email: $email, password: $password) {
+      token
+    }
+  }
+`;
+
 export default function CardLogin() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors, isDirty },
   } = useForm<IFormInput>();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = (data) =>
+    auth({
+      variables: {
+        email: getValues("email"),
+        password: getValues("password"),
+      },
+    });
+
+  const [auth, { data, loading }] = useMutation(AUTH);
 
   return (
     <div className="card">
@@ -41,11 +59,14 @@ export default function CardLogin() {
             required: true,
           })}
         />
-    
-          {(errors.password && isDirty) && <span role="alert">Password is required</span>}
-        
 
-        <button type="submit">Login</button>
+        {errors.password && isDirty && (
+          <span role="alert">Password is required</span>
+        )}
+
+        <button type="submit">
+          {(!loading && "Create account") || (loading && "Loading")}
+        </button>
         <span>Forgot password?</span>
       </form>
       <div className="card-footer">

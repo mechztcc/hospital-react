@@ -1,11 +1,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 
 import "./styles.css";
-import { useState, useEffect } from "react";
-import { log } from "console";
 
 interface IFormInput {
   name: string;
@@ -18,14 +16,6 @@ interface IFormInput {
   birth: string;
 }
 
-const CREATE_ROLE = gql`
-  mutation CreateRole {
-    createRole(name: "Medic2") {
-      id
-      name
-    }
-  }
-`;
 const CREATE_ACCOUNT = gql`
   mutation Create(
     $email: String!
@@ -54,15 +44,6 @@ const CREATE_ACCOUNT = gql`
   }
 `;
 
-const FIND_ROLES = gql`
-  query Roles {
-    roles {
-      id
-      name
-    }
-  }
-`;
-
 export default function CardCreateAccount() {
   const {
     register,
@@ -73,24 +54,19 @@ export default function CardCreateAccount() {
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    createUser();
+    createUser({
+      variables: {
+        email: getValues("email"),
+        name: getValues("name"),
+        password: getValues("password"),
+        payment: getValues("payment"),
+        birth: getValues("birth"),
+        second_name: getValues("secondName"),
+      },
+    });
   };
 
-  const [createUser, { data, loading, error }] = useMutation(CREATE_ACCOUNT, {
-    variables: {
-      email: getValues("email"),
-      name: getValues("name"),
-      password: getValues("password"),
-      payment: getValues("payment"),
-      birth: getValues("birth"),
-      second_name: getValues("secondName"),
-    },
-    onError: console.log,
-  });
-
-  if(data) {
-    reset()
-  }
+  const [createUser, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
 
   return (
     <div className="card">
@@ -146,7 +122,6 @@ export default function CardCreateAccount() {
         <input
           type="email"
           {...register("email", {
-            //onChange: () => console.log(errors),
             required: true,
             pattern: {
               value: /\S+@\S+\.\S+/,
@@ -173,7 +148,7 @@ export default function CardCreateAccount() {
           ))}
 
         <button type="submit">
-          {(!loading && "Create account") || (loading && "Carregando...")}
+          {(!loading && "Create account") || (loading && "Loading...")}
         </button>
         <span></span>
       </form>
