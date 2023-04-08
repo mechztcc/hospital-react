@@ -1,8 +1,8 @@
-import { useMutation, gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import "./styles.css";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 interface IFormInput {
   email: String;
@@ -25,15 +25,21 @@ export default function CardLogin() {
     formState: { errors, isDirty },
   } = useForm<IFormInput>();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) =>
-    auth({
+  const [auth, { data, loading }] = useMutation(AUTH);
+
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<IFormInput> = async () =>
+    await auth({
       variables: {
         email: getValues("email"),
         password: getValues("password"),
       },
     });
 
-  const [auth, { data, loading }] = useMutation(AUTH);
+  if (data) {
+    navigate("/");
+  }
 
   return (
     <div className="card">
@@ -65,7 +71,7 @@ export default function CardLogin() {
         )}
 
         <button type="submit">
-          {(!loading && "Create account") || (loading && "Loading")}
+          {(!loading && "Login") || (loading && "Loading")}
         </button>
         <span>Forgot password?</span>
       </form>

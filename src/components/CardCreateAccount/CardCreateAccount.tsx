@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -53,6 +53,10 @@ export default function CardCreateAccount() {
     formState: { errors, isDirty },
   } = useForm<IFormInput>();
 
+  const [createUser, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
+
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     createUser({
       variables: {
@@ -66,7 +70,9 @@ export default function CardCreateAccount() {
     });
   };
 
-  const [createUser, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
+  if (data) {
+    navigate("/login");
+  }
 
   return (
     <div className="card">
