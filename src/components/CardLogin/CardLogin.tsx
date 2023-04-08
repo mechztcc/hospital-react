@@ -38,6 +38,7 @@ export default function CardLogin() {
     });
 
   if (data) {
+    localStorage.setItem('token', data.auth.token)
     navigate("/");
   }
 
